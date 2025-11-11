@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/screenEditTextText"
+        android:layout_width="293dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="140dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button6"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:onClick="onclick"
+        android:text="6"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonDivid"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+    <Button
+        android:id="@+id/buttonClear"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:layout_marginEnd="66dp"
+        android:onClick="clear"
+        android:text="C"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDelete" />
+
+    <Button
+        android:id="@+id/button2"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="71dp"
+        android:onClick="onclick"
+        android:text="2"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintTop_toBottomOf="@+id/screenEditTextText" />
+
+    <Button
+        android:id="@+id/button0"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="65dp"
+        android:onClick="onclick"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonEulir"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button7" />
+
+    <Button
+        android:id="@+id/button4"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="65dp"
+        android:onClick="onclick"
+        android:text="4"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button1" />
+
+    <Button
+        android:id="@+id/buttonSquareRoot"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="71dp"
+        android:text="√"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonDelete"
+        app:layout_constraintTop_toBottomOf="@+id/screenEditTextText" />
+
+    <Button
+        android:id="@+id/button1"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="71dp"
+        android:onClick="onclick"
+        android:text="1"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/screenEditTextText" />
+
+    <Button
+        android:id="@+id/button3"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="71dp"
+        android:onClick="onclick"
+        android:text="3"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSquareRoot"
+        app:layout_constraintTop_toBottomOf="@+id/screenEditTextText" />
+
+    <Button
+        android:id="@+id/buttonPy"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:text="py"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonMultiply"
+        app:layout_constraintTop_toBottomOf="@+id/button9" />
+
+    <Button
+        android:id="@+id/button8"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:onClick="onclick"
+        android:text="8"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/button9"
+        app:layout_constraintTop_toBottomOf="@+id/button5" />
+
+    <Button
+        android:id="@+id/buttonSubtract"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:onClick="onclick"
+        android:text="-"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonPoint"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEulir" />
+
+    <Button
+        android:id="@+id/buttonExponent"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:onClick="onclick"
+        android:text="^"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonEquals"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDivid" />
+
+    <Button
+        android:id="@+id/buttonAdd"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="65dp"
+        android:onClick="onclick"
+        android:text="+"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSubtract"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button0" />
+
+    <Button
+        android:id="@+id/buttonDelete"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="71dp"
+        android:layout_marginEnd="66dp"
+        android:onClick="remove"
+        android:text="D"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/screenEditTextText" />
+
+    <Button
+        android:id="@+id/buttonMultiply"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:onClick="onclick"
+        android:text="*"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonEquals"
+        app:layout_constraintTop_toBottomOf="@+id/buttonExponent" />
+
+    <Button
+        android:id="@+id/buttonParenth"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="112dp"
+        android:layout_height="62dp"
+        android:layout_marginEnd="66dp"
+        android:text="(  )"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonMultiply" />
+
+    <Button
+        android:id="@+id/buttonPoint"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:onClick="onclick"
+        android:text="."
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonParenth"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPy" />
+
+    <Button
+        android:id="@+id/button9"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:onClick="onclick"
+        android:text="9"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonExponent"
+        app:layout_constraintTop_toBottomOf="@+id/button6" />
+
+    <Button
+        android:id="@+id/buttonEulir"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:text="e"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonPy"
+        app:layout_constraintTop_toBottomOf="@+id/button8" />
+
+    <Button
+        android:id="@+id/button5"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:onClick="onclick"
+        android:text="5"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/button6"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+    <Button
+        android:id="@+id/buttonDivid"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:onClick="onclick"
+        android:text="/"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonClear"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSquareRoot" />
+
+    <Button
+        android:id="@+id/button7"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="65dp"
+        android:onClick="onclick"
+        android:text="7"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/button8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
+
+    <Button
+        android:id="@+id/buttonEquals"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="56dp"
+        android:layout_height="124dp"
+        android:layout_marginEnd="66dp"
+        android:onClick="calculate"
+        android:text="="
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonClear" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
