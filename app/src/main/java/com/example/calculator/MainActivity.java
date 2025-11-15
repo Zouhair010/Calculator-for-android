@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     /** The EditText field that serves as the calculator screen/display. */
     private EditText screen;
     /** Tracks whether an opening parenthesis has been placed without a corresponding closing one. */
-    private boolean parenthesesOpen = false;
+    private int openingParenthesesCounter = 0;
 
     /**
      * Casts a Double to a Long if it has no fractional part, otherwise returns the Double.
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Object formatResultForDisplay(Double number) {
         long longNumber = number.longValue();
         double doubleNumber = (double)longNumber;
-        // Check if the double value of the long is equal to the original double
+        // Check if the double value of the long is equal to the original double, indicating no fractional part.
         if (doubleNumber==number){
             return longNumber;
         }
@@ -52,13 +52,13 @@ public class MainActivity extends AppCompatActivity {
     private boolean isDigit(Object obj){
         if (obj instanceof String){
             try{
-                // Attempts to parse as Integer and then checks if the string representation matches the original
+                // Attempts to parse as Integer and then checks if the string representation matches the original.
                 Integer n =  Integer.valueOf(obj.toString());
                 if(n.toString().equals(obj)){
                     return true;
                 }
             }
-            catch (NumberFormatException e){
+            catch (NumberFormatException e){ // Using try-catch for flow control is generally discouraged.
                 return false;
             }
         }
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             }
-            catch (NumberFormatException e){
+            catch (NumberFormatException e){ // This check is complex and can be simplified.
                 return false;
             }
         }
@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     private Double exponent(Double a, Double b) {
         Double times = b;
         Double exp = (double) 1;
+        // Iteratively multiply the base 'a' by itself 'b' times.
         while (times>0) {
             exp*=a;
             times--;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
      * @return The modified list after performing all occurrences of the specified operation.
      */
     private void operation(ArrayList<Object> items , char operator, int index){
-        // Assumes format is always [number1, operator, number2] at this stage
+        // Assumes format is always [number1, operator, number2] at this stage.
         Double number1 = (Double)items.get(index-1);
         Double number2 = (Double)items.get(index+1);
         // Perform the operation
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 items.set(index-1, number1-number2);
                 break;
         }
-        // Remove the operator and the second operand
+        // Remove the operator and the second operand, leaving the result in place of the first operand.
         items.remove(index);
         items.remove(index);
     }
@@ -138,21 +139,24 @@ public class MainActivity extends AppCompatActivity {
      */
     private void squareRoot(ArrayList<Object> items, int index) {
         Double number = (Double)items.get(index+1);
-        // Initial guess for the square root
+        // Square root of a negative number is not supported in this implementation.
+        if (number<0){
+            return;
+        }
+        // Initial guess for the square root.
         Double initial = (number+1)/10;
         Double sqrtVal;
 
-        // Babylonian method iteration
+        // Babylonian method iteration for finding the square root.
         while(true) {
-            // New approximation: (initial + (number / initial)) / 2
+            // New approximation: (initial + (number / initial)) / 2.
             sqrtVal = (initial+(number/initial))/2;
-            // Check for convergence (when the initial and new approximation are effectively equal)
+            // Check for convergence (when the initial and new approximation are effectively equal).
             if (initial.equals(sqrtVal)) {
                 break;
             }
             initial = sqrtVal;
         }
-        // Replace the '√' token with the result (sqrtVal)
         // Remove the operator token
         items.remove(index);
         // Set the result in the position of the original operand
@@ -164,14 +168,14 @@ public class MainActivity extends AppCompatActivity {
      * @param items The list of numbers (Doubles) and operators (Characters).
      * @return The final result of the calculation as a Double.
      */
-    private Double calculateExpression(ArrayList<Object> items){
-        int index = 0;
-        // 1. Process Exponents (^) and Square Roots (√)
+    private Double calculate(ArrayList<Object> items){
+        int index = 0; // Index for iterating through the token list.
+        // 1. Process Exponents (^) and Square Roots (√) - Highest precedence.
         if (items.contains('√') || items.contains('^')){
             while (index<items.size()){
                 if(items.get(index).equals('√')){
                     squareRoot(items,index);
-                }
+                } // Note: squareRoot modifies the list and the loop continues from the next index.
                 else if(items.get(index).equals('^')){
                     operation(items,'^',index);
                     continue; // Continue from the beginning after modification
@@ -179,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 index++;
             }
         }
-        // 2. Process Multiplication (*) and Division (/)
+        // 2. Process Multiplication (*) and Division (/) - Medium precedence.
         if (items.contains('*') || items.contains('/')){
             index = 0;
             while (index<items.size()){
@@ -194,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                 index++;
             }
         }
-        // 3. Process Addition (+) and Subtraction (-)
+        // 3. Process Addition (+) and Subtraction (-) - Lowest precedence.
         if (items.contains('+') || items.contains('-')){
             index = 0;
             while (index<items.size()){
@@ -218,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // After all operations, only the final result should remain at index 0
+        // After all operations, only the final result should remain at index 0.
         return (Double)items.get(0);
     }
     /**
@@ -227,31 +231,34 @@ public class MainActivity extends AppCompatActivity {
      * @param string The input expression string.
      * @return An ArrayList of Objects, containing Doubles for numbers and Characters for operators.
      */
-    private ArrayList<Object> splitsIntoNumbersOperators(String string){
+    private ArrayList<Object> splitIntoNumbersOperators(String string){
         ArrayList<Object> items = new ArrayList<Object>();
+        // Wrap the entire expression in parentheses to simplify parenthesis resolution logic.
+        items.add('(');
         ArrayList<String> number = new ArrayList<String>();
         for (char c : string.toCharArray()) {
-            // If the character is a digit or a decimal point, append it to the current number string
+            // If the character is a digit or a decimal point, append it to the current number string.
             if(isDigit(c) || c=='.'){
                 number.add(""+c);
             }
             else{
-                // If an operator is encountered, finalize the current number (if any) and add it to items
+                // If an operator is encountered, finalize the current number (if any) and add it to items.
                 if (number.size()>0){
                     Double num = Double.parseDouble(String.join("",number));
                     items.add(num);
                 }
-                // Add the operator token
+                // Add the operator token.
                 items.add(c);
-                // Start a new number accumulator
+                // Start a new number accumulator.
                 number = new ArrayList<String>();
             }
         }
-        // Add the last number if the expression didn't end with an operator
+        // Add the last number if the expression didn't end with an operator.
         if (number.size()>0){
             Double num = Double.parseDouble(String.join("",number));
             items.add(num);
         }
+        items.add(')');
         return items;
     }
 
@@ -264,39 +271,34 @@ public class MainActivity extends AppCompatActivity {
      * @param end The index of the closing parenthesis ')'.
      */
     private void calculateSubExpression(ArrayList<Object> items, int start, int end){
-        // Extract the sub-expression that needs to be calculated
+        // Extract the sub-expression that needs to be calculated.
         ArrayList<Object> itemsBetweenParentheses = new ArrayList<Object>(items.subList(start+1,end));
-        // Remove the content of the parentheses (including '(' and ')') from the original list
+        // Remove the content of the parentheses (including ')') from the original list.
         for (int j=start+1 ; j<=end; j++){
             items.remove(start+1);
         }
 
-        // Calculate the result of the sub-expression and replace the opening parenthesis '(' with the result
-        items.set(start, calculateExpression(itemsBetweenParentheses));
+        // Calculate the result of the sub-expression and replace the opening parenthesis '(' with the result.
+        items.set(start, calculate(itemsBetweenParentheses));
     }
 
     /**
-     * Recursively scans the token list to detect and resolve the innermost (nested) parentheses.
-     * It works by finding the latest opening parenthesis '(' and the first subsequent closing parenthesis ')'.
-     * Once a pair is found, it calculates the result and restarts the detection process (recursion).
-     * @param items The list of numbers and operators, which may include parentheses.
+     * Resolves nested parentheses by finding the innermost pairs first, calculating their result,
+     * and replacing the sub-expression with the result. This process repeats until no parentheses are left.
+     * @param items The list of tokens, which is modified in-place.
      */
     private void resolveNestedParentheses(ArrayList<Object> items){
         int index = 0;
-        int start = -1; // Tracksnumbers/operators the index of the most recently found '('
+        int start = -1; // Tracks the index of the most recently found '('.
         while (index<items.size()){
-            if(items.get(index).equals('(')){
-                // Mark the start of a potential nested expression
-                start = index;
-            }
+            if(items.get(index).equals('(')) start = index; // Mark the start of a potential nested expression.
             else if(items.get(index).equals(')')){
-                // Found a closing parenthesis
+                // Found a closing parenthesis.
                 if (start != -1){
                     // This is a complete, innermost expression: calculate it.
                     calculateSubExpression(items, start, index);
-                    // Restart detection recursively to find the next nested pair or outer pair
-                    resolveNestedParentheses(items);
-                    return; // Exit current iteration after recursive call
+                    index = 0;
+                    continue;
                 }
             }
             index++;
@@ -313,24 +315,18 @@ public class MainActivity extends AppCompatActivity {
     private void executeCalculation(){
         try {
             // 1. Tokenize the input string
-            ArrayList<Object> items = splitsIntoNumbersOperators(screen.getText().toString());
-            // 2. Resolve parentheses recursively
+            ArrayList<Object> items = splitIntoNumbersOperators(screen.getText().toString());
+            // 2. Resolve parentheses from the inside out.
             resolveNestedParentheses(items);
-            // 3. Perform final calculation on the simplified token list
-            calculateExpression(items);
-            // 4. Display the final result, casting to Long if it's a whole number
+            // 3. Display the final result, formatting to Long if it's a whole number.
             screen.setText(""+formatResultForDisplay((Double) items.get(0)));
         }
         catch(Exception e) {
             System.out.println(e.getMessage());
+            // On any calculation error, clear the screen.
+            screen.setText("");
             // Show a short "ERROR!" notification to the user
             Toast.makeText(this,"ERROR!",Toast.LENGTH_SHORT).show();
-            // Display "ERROR!" on the calculator screen
-            screen.setText("ERROR!");
-            // Pause the thread briefly (3 seconds) to show the error
-            SystemClock.sleep(3000);
-            // Clear the screen after the pause
-            screen.setText("");
         }
     }
     /**
@@ -340,6 +336,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void onclick(View view) {
         Button button = (Button) view;
+        // Get current text and append the new character from the button.
         String text = screen.getText().toString();
         screen.setText(text+button.getText().toString());
     }
@@ -349,6 +346,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private void clearScreen() {
         screen.setText("");
+        // Reset the parenthesis counter as well.
+        openingParenthesesCounter = 0;
     }
     /**
      * Removes the last character from the text field (screen).
@@ -358,15 +357,24 @@ public class MainActivity extends AppCompatActivity {
             return; // Nothing to remove
         }
         // Array to hold characters as strings
-        String[] elements = new String[screen.getText().length()];
+        String[] elements = new String[screen.getText().length()]; // This is an inefficient way to remove the last char.
         int trucker = 0;
-
         // Populate the array with individual characters
         for(char c : screen.getText().toString().toCharArray()) {
             elements[trucker] = ""+c;
             trucker++;
         }
-        // Rebuild the string using all elements except the last one (elements.length-1)
+        // Adjust parenthesis counter if a parenthesis is being deleted.
+        if (elements.length>0){
+            if (elements[elements.length-1].equals("(")){
+                openingParenthesesCounter--; // Decrement if an opening parenthesis is removed.
+            }
+            else if (elements[elements.length-1].equals(")")){
+                openingParenthesesCounter++; // Increment if a closing parenthesis is removed (counterintuitive, but matches toggle logic).
+            }
+        }
+        // Rebuild the string using all elements except the last one.
+        // A more efficient approach would be to use screen.getText().delete(length-1, length).
         screen.setText(String.join("", Arrays.copyOf(elements, elements.length-1)));
     }
     /**
@@ -374,12 +382,13 @@ public class MainActivity extends AppCompatActivity {
      * @return A "(" if no parenthesis is currently open, or a ")" if one is.
      */
     private String toggleParenthesis() {
-        if(!parenthesesOpen) {
-            parenthesesOpen = true;
+        // If the counter is 0, it means we need an opening parenthesis.
+        if (openingParenthesesCounter==0){
+            openingParenthesesCounter++;
             return "(";
         }
         else {
-            parenthesesOpen = false;
+            openingParenthesesCounter--;
             return ")";
         }
     }
@@ -421,7 +430,7 @@ public class MainActivity extends AppCompatActivity {
         // --- Operator and Special Function Listeners with Validation ---
 
         findViewById(R.id.buttonAdd).setOnClickListener(v -> {
-            // Only allow '+' if the screen is not empty AND the last character is a digit or ')'
+            // Only allow '+' if the screen is not empty AND the last character is a digit or ')'.
             if (screen.getText().toString().length()>0 &&
                     (isDigit(screen.getText().toString().toCharArray()[screen.getText().toString().length()-1])
                             || screen.getText().toString().toCharArray()[screen.getText().toString().length()-1]==')')){
@@ -429,7 +438,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         findViewById(R.id.buttonSubtract).setOnClickListener(v -> {{onclick(v);}}); // Subtraction is always allowed (can be unary minus)
-        findViewById(R.id.buttonMultiply).setOnClickListener(v -> {
+        findViewById(R.id.buttonMultiply).setOnClickListener(v -> { // Same validation as addition.
             // Only allow '*' if the screen is not empty AND the last character is a digit or ')'
             if (screen.getText().toString().length()>0 &&
                     (isDigit(screen.getText().toString().toCharArray()[screen.getText().toString().length()-1])
@@ -437,7 +446,7 @@ public class MainActivity extends AppCompatActivity {
                 onclick(v);
             }
         });
-        findViewById(R.id.buttonDivid).setOnClickListener(v -> {
+        findViewById(R.id.buttonDivid).setOnClickListener(v -> { // Same validation as addition.
             // Only allow '/' if the screen is not empty AND the last character is a digit or ')'
             if (screen.getText().toString().length()>0 &&
                     (isDigit(screen.getText().toString().toCharArray()[screen.getText().toString().length()-1])
@@ -445,16 +454,16 @@ public class MainActivity extends AppCompatActivity {
                 onclick(v);
             }
         });
-        findViewById(R.id.buttonExponent).setOnClickListener(v -> {
+        findViewById(R.id.buttonExponent).setOnClickListener(v -> { // Same validation as addition.
             // Only allow '^' if the screen is not empty AND the last character is a digit or ')'
             if (screen.getText().toString().length()>0 &&
                     (isDigit(screen.getText().toString().toCharArray()[screen.getText().toString().length()-1])
                             || screen.getText().toString().toCharArray()[screen.getText().toString().length()-1]==')')){
                 onclick(v);
                 String text = screen.getText().toString();
-                // Commented-out code suggests an attempt to auto-add an opening parenthesis after exponent.
+                // Automatically add an opening parenthesis after exponent to enforce order of operations.
                 screen.setText(text+"(");
-                parenthesesOpen = true;
+                openingParenthesesCounter++;
             }
         });
         findViewById(R.id.buttonPoint).setOnClickListener(v -> {
@@ -464,29 +473,35 @@ public class MainActivity extends AppCompatActivity {
                 onclick(v);
             }
         });
-        findViewById(R.id.buttonSquareRoot).setOnClickListener(v -> {
+        findViewById(R.id.buttonSquareRoot).setOnClickListener(v -> { // Validation for square root.
             // Allow '√' if the screen is empty OR if the last character is not a digit (i.e., it follows an operator)
             if (screen.getText().toString().length()==0 ||
                     (screen.getText().toString().length()>0 &&
                             !isDigit(screen.getText().toString().toCharArray()[screen.getText().toString().length()-1]))) {
                 onclick(v);
                 String text = screen.getText().toString();
-                // Commented-out code suggests an attempt to auto-add an opening parenthesis after square root.
+                // Automatically add an opening parenthesis after square root.
                 screen.setText(text+"(");
-                parenthesesOpen = true;
+                openingParenthesesCounter++;
             }
         });
 
         findViewById(R.id.buttonPy).setOnClickListener(v -> {
             // Appends Pi (22/7 approx) only if the current entry does not already contain a decimal point
-            if (!screen.getText().toString().contains(".")) {
+            if ((screen.getText().toString().length()>0 &&
+                    !isDigit(screen.getText().toString().toCharArray()[screen.getText().toString().length()-1]) &&
+                    screen.getText().toString().toCharArray()[screen.getText().toString().length()-1]!='.') ||
+                    screen.getText().toString().length()>0) {
                 String text = screen.getText().toString();
                 screen.setText(text + ((double) 22 / 7)); // Uses double division for approximation
             }
         });
         findViewById(R.id.buttonEulir).setOnClickListener(v -> {
             // Appends Euler's number (19/7 approx) only if the current entry does not already contain a decimal point
-            if (!screen.getText().toString().contains(".")) {
+            if ((screen.getText().toString().length()>0 &&
+                    !isDigit(screen.getText().toString().toCharArray()[screen.getText().toString().length()-1]) &&
+                    screen.getText().toString().toCharArray()[screen.getText().toString().length()-1]!='.') ||
+                    screen.getText().toString().length()>0) {
                 String text = screen.getText().toString();
                 screen.setText(text+((double)19/7)); // Uses double division for approximation
             }
@@ -501,6 +516,5 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.buttonEquals).setOnClickListener(v -> {executeCalculation();});
         findViewById(R.id.buttonDelete).setOnClickListener(v -> {deleteLastItem();});
         findViewById(R.id.buttonClear).setOnClickListener(v -> {clearScreen();});
-
     }
 }

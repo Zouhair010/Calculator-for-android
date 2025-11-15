@@ -5,331 +5,494 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1E1E1E"
     tools:context=".MainActivity">
 
+    <!-- شاشة العرض (EditText) - تم تحسين حجم الخط والمحاذاة -->
     <EditText
         android:id="@+id/screenEditTextText"
-        android:layout_width="293dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="140dp"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
         android:ems="10"
+        android:gravity="bottom|end"
+        android:hint="0"
         android:inputType="text"
+        android:maxLength="30"
+        android:textAlignment="viewEnd"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#9E9E9E"
+        android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button6"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:onClick="onclick"
-        android:text="6"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDivid"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+    <!-- إنشاء خطوط إرشادية أفقية (Guidelines) لتحديد الصفوف (لأزرار العمليات/الأرقام) -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_row1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.30" />
 
-    <Button
-        android:id="@+id/buttonClear"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:layout_marginEnd="66dp"
-        android:onClick="clear"
-        android:text="C"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonDelete" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_row2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.41" />
 
-    <Button
-        android:id="@+id/button2"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="71dp"
-        android:onClick="onclick"
-        android:text="2"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintTop_toBottomOf="@+id/screenEditTextText" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_row3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.52" />
 
-    <Button
-        android:id="@+id/button0"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="65dp"
-        android:onClick="onclick"
-        android:text="0"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonEulir"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button7" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_row4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.63" />
 
-    <Button
-        android:id="@+id/button4"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="65dp"
-        android:onClick="onclick"
-        android:text="4"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button1" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_row5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.74" />
 
-    <Button
-        android:id="@+id/buttonSquareRoot"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="71dp"
-        android:text="√"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDelete"
-        app:layout_constraintTop_toBottomOf="@+id/screenEditTextText" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_row6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
 
-    <Button
-        android:id="@+id/button1"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="71dp"
-        android:onClick="onclick"
-        android:text="1"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/screenEditTextText" />
+    <!-- إنشاء خطوط إرشادية عمودية (Guidelines) لتحديد الأعمدة -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_col1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
 
-    <Button
-        android:id="@+id/button3"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="71dp"
-        android:onClick="onclick"
-        android:text="3"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSquareRoot"
-        app:layout_constraintTop_toBottomOf="@+id/screenEditTextText" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_col2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.29" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_col3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.53" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_col4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="104dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_col5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+
+    <!-- الصف الأول - الأزرار الخاصة (Special Buttons) -->
 
     <Button
         android:id="@+id/buttonPy"
         style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:text="py"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonMultiply"
-        app:layout_constraintTop_toBottomOf="@+id/button9" />
-
-    <Button
-        android:id="@+id/button8"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:onClick="onclick"
-        android:text="8"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#AFAFAF"
+        android:text="π"
+        android:textColor="#1E1E1E"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/button9"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
-
-    <Button
-        android:id="@+id/buttonSubtract"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:onClick="onclick"
-        android:text="-"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonPoint"
-        app:layout_constraintTop_toBottomOf="@+id/buttonEulir" />
-
-    <Button
-        android:id="@+id/buttonExponent"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:onClick="onclick"
-        android:text="^"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonEquals"
-        app:layout_constraintTop_toBottomOf="@+id/buttonDivid" />
-
-    <Button
-        android:id="@+id/buttonAdd"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="65dp"
-        android:onClick="onclick"
-        android:text="+"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSubtract"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button0" />
-
-    <Button
-        android:id="@+id/buttonDelete"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="71dp"
-        android:layout_marginEnd="66dp"
-        android:onClick="remove"
-        android:text="D"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/screenEditTextText" />
-
-    <Button
-        android:id="@+id/buttonMultiply"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:onClick="onclick"
-        android:text="*"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonEquals"
-        app:layout_constraintTop_toBottomOf="@+id/buttonExponent" />
-
-    <Button
-        android:id="@+id/buttonParenth"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="112dp"
-        android:layout_height="62dp"
-        android:layout_marginEnd="66dp"
-        android:text="(  )"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMultiply" />
-
-    <Button
-        android:id="@+id/buttonPoint"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:onClick="onclick"
-        android:text="."
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonParenth"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPy" />
-
-    <Button
-        android:id="@+id/button9"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:onClick="onclick"
-        android:text="9"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonExponent"
-        app:layout_constraintTop_toBottomOf="@+id/button6" />
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col2"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col1"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row1" />
 
     <Button
         android:id="@+id/buttonEulir"
         style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#AFAFAF"
         android:text="e"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonPy"
-        app:layout_constraintTop_toBottomOf="@+id/button8" />
+        android:textColor="#1E1E1E"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col3"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col2"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row1" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/buttonExponent"
         style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#FF9500"
         android:onClick="onclick"
-        android:text="5"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
+        android:text="^"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/button6"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col4"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col3"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row1" />
+
+    <Button
+        android:id="@+id/buttonSquareRoot"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#FF9500"
+        android:text="√"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col5"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col4"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row1" />
+
+    <!-- الصف الثاني - المسح والحذف والقسمة (Clear, Delete, Divide) -->
+
+    <Button
+        android:id="@+id/buttonClear"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#ED3939"
+        android:onClick="clearScreen"
+        android:text="C"
+        android:textColor="#1E1E1E"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col3"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col1"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row2" />
+
+    <Button
+        android:id="@+id/buttonDelete"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#AFAFAF"
+        android:onClick="remove"
+        android:text="D"
+        android:textColor="#1E1E1E"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col4"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col3"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row2" />
 
     <Button
         android:id="@+id/buttonDivid"
         style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#FF9500"
         android:onClick="onclick"
         android:text="/"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonClear"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSquareRoot" />
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col5"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col4"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row2" />
+
+    <!-- الصف الثالث - أزرار 7، 8، 9، الضرب (Multiply) -->
 
     <Button
         android:id="@+id/button7"
         style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="65dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#333333"
         android:onClick="onclick"
         android:text="7"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/button8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col2"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col1"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row3" />
 
+    <Button
+        android:id="@+id/button8"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#333333"
+        android:onClick="onclick"
+        android:text="8"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col3"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col2"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row3" />
+
+    <Button
+        android:id="@+id/button9"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#333333"
+        android:onClick="onclick"
+        android:text="9"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col4"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col3"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row3" />
+
+    <Button
+        android:id="@+id/buttonMultiply"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#FF9500"
+        android:onClick="onclick"
+        android:text="*"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col5"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col4"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row3" />
+
+    <!-- الصف الرابع - أزرار 4، 5، 6، الطرح (Subtract) -->
+
+    <Button
+        android:id="@+id/button4"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#333333"
+        android:onClick="onclick"
+        android:text="4"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col2"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col1"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row4" />
+
+    <Button
+        android:id="@+id/button5"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#333333"
+        android:onClick="onclick"
+        android:text="5"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col3"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col2"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row4" />
+
+    <Button
+        android:id="@+id/button6"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#333333"
+        android:onClick="onclick"
+        android:text="6"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col4"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col3"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row4" />
+
+    <Button
+        android:id="@+id/buttonSubtract"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#FF9500"
+        android:onClick="onclick"
+        android:text="-"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col5"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col4"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row4" />
+
+    <!-- الصف الخامس - أزرار 1، 2، 3، الجمع (Add) -->
+
+    <Button
+        android:id="@+id/button1"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#333333"
+        android:onClick="onclick"
+        android:text="1"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row6"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col2"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col1"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row5" />
+
+    <Button
+        android:id="@+id/button2"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#333333"
+        android:onClick="onclick"
+        android:text="2"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row6"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col3"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col2"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row5" />
+
+    <Button
+        android:id="@+id/button3"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#333333"
+        android:onClick="onclick"
+        android:text="3"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row6"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col4"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col3"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row5" />
+
+    <Button
+        android:id="@+id/buttonAdd"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#FF9500"
+        android:onClick="onclick"
+        android:text="+"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row6"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col5"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col4"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row5" />
+
+    <!-- الصف السادس والأخير - 0، النقطة، الأقواس، يساوي (Equals) -->
+
+    <!-- الزر 0 أصبح بحجم عادي (يشغل C1-C2) -->
+    <Button
+        android:id="@+id/button0"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#333333"
+        android:onClick="onclick"
+        android:text="0"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col2"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col1"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row6" />
+
+    <!-- زر النقطة (يشغل C2-C3) -->
+    <Button
+        android:id="@+id/buttonPoint"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#333333"
+        android:onClick="onclick"
+        android:text="."
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col3"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col2"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row6" />
+
+    <!-- زر الأقواس (يشغل C3-C4) - بجوار النقطة -->
+    <Button
+        android:id="@+id/buttonParenth"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#AFAFAF"
+        android:onClick="onclick"
+        android:text="( )"
+        android:textColor="#1E1E1E"
+        android:textSize="20sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col4"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col3"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row6" />
+
+    <!-- زر يساوي (=) (يشغل C4-C5) -->
     <Button
         android:id="@+id/buttonEquals"
         style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
-        android:layout_width="56dp"
-        android:layout_height="124dp"
-        android:layout_marginEnd="66dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#2BED33"
         android:onClick="calculate"
         android:text="="
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonClear" />
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        app:cornerRadius="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col5"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col4"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
