@@ -8,29 +8,26 @@
     android:background="#1E1E1E"
     tools:context=".MainActivity">
 
-    <!-- شاشة العرض (EditText) - تم تحسين حجم الخط والمحاذاة -->
     <EditText
         android:id="@+id/screenEditTextText"
         android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="16dp"
+        android:layout_height="0dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:gravity="bottom|end"
         android:hint="0"
-        android:inputType="text"
-        android:maxLength="30"
         android:textAlignment="viewEnd"
         android:textColor="#FFFFFF"
         android:textColorHint="#9E9E9E"
         android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <!-- إنشاء خطوط إرشادية أفقية (Guidelines) لتحديد الصفوف (لأزرار العمليات/الأرقام) -->
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row1"
         android:layout_width="wrap_content"
@@ -71,36 +68,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.86" />
 
-    <!-- إنشاء خطوط إرشادية عمودية (Guidelines) لتحديد الأعمدة -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_col1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
+        app:layout_constraintGuide_percent="0.05352798" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_col2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.29" />
+        app:layout_constraintGuide_percent="0.28" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_col3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.53" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_col4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="104dp" />
+        app:layout_constraintGuide_percent="0.73" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_col5"
@@ -109,8 +105,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
 
-
-    <!-- الصف الأول - الأزرار الخاصة (Special Buttons) -->
 
     <Button
         android:id="@+id/buttonPy"
@@ -173,7 +167,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_col4"
         app:layout_constraintTop_toTopOf="@+id/guideline_row1" />
 
-    <!-- الصف الثاني - المسح والحذف والقسمة (Clear, Delete, Divide) -->
 
     <Button
         android:id="@+id/buttonClear"
@@ -187,7 +180,7 @@
         android:textSize="24sp"
         app:cornerRadius="35dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_row3"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_col3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col2"
         app:layout_constraintStart_toStartOf="@+id/guideline_col1"
         app:layout_constraintTop_toTopOf="@+id/guideline_row2" />
 
@@ -203,8 +196,8 @@
         android:textSize="24sp"
         app:cornerRadius="35dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_row3"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_col4"
-        app:layout_constraintStart_toStartOf="@+id/guideline_col3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col3"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col2"
         app:layout_constraintTop_toTopOf="@+id/guideline_row2" />
 
     <Button
@@ -219,11 +212,10 @@
         android:textSize="24sp"
         app:cornerRadius="35dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_row3"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_col5"
-        app:layout_constraintStart_toStartOf="@+id/guideline_col4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col4"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col3"
         app:layout_constraintTop_toTopOf="@+id/guideline_row2" />
 
-    <!-- الصف الثالث - أزرار 7، 8، 9، الضرب (Multiply) -->
 
     <Button
         android:id="@+id/button7"
@@ -284,12 +276,11 @@
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:cornerRadius="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_row4"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row3"
         app:layout_constraintEnd_toStartOf="@+id/guideline_col5"
         app:layout_constraintStart_toStartOf="@+id/guideline_col4"
-        app:layout_constraintTop_toTopOf="@+id/guideline_row3" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_row2" />
 
-    <!-- الصف الرابع - أزرار 4، 5، 6، الطرح (Subtract) -->
 
     <Button
         android:id="@+id/button4"
@@ -350,12 +341,11 @@
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:cornerRadius="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_row5"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row4"
         app:layout_constraintEnd_toStartOf="@+id/guideline_col5"
         app:layout_constraintStart_toStartOf="@+id/guideline_col4"
-        app:layout_constraintTop_toTopOf="@+id/guideline_row4" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_row3" />
 
-    <!-- الصف الخامس - أزرار 1، 2، 3، الجمع (Add) -->
 
     <Button
         android:id="@+id/button1"
@@ -416,14 +406,11 @@
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:cornerRadius="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_row6"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row5"
         app:layout_constraintEnd_toStartOf="@+id/guideline_col5"
         app:layout_constraintStart_toStartOf="@+id/guideline_col4"
-        app:layout_constraintTop_toTopOf="@+id/guideline_row5" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_row4" />
 
-    <!-- الصف السادس والأخير - 0، النقطة، الأقواس، يساوي (Equals) -->
-
-    <!-- الزر 0 أصبح بحجم عادي (يشغل C1-C2) -->
     <Button
         android:id="@+id/button0"
         style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
@@ -441,7 +428,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_col1"
         app:layout_constraintTop_toTopOf="@+id/guideline_row6" />
 
-    <!-- زر النقطة (يشغل C2-C3) -->
     <Button
         android:id="@+id/buttonPoint"
         style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
@@ -459,7 +445,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_col2"
         app:layout_constraintTop_toTopOf="@+id/guideline_row6" />
 
-    <!-- زر الأقواس (يشغل C3-C4) - بجوار النقطة -->
     <Button
         android:id="@+id/buttonParenth"
         style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
@@ -477,7 +462,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_col3"
         app:layout_constraintTop_toTopOf="@+id/guideline_row6" />
 
-    <!-- زر يساوي (=) (يشغل C4-C5) -->
     <Button
         android:id="@+id/buttonEquals"
         style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary"
@@ -493,6 +477,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline_col5"
         app:layout_constraintStart_toStartOf="@+id/guideline_col4"
-        app:layout_constraintTop_toTopOf="@+id/guideline_row6" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_row5" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

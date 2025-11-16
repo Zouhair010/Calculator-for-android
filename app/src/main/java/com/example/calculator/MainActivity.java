@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return number;
     }
+
     /**
      * Checks if an object represents a single digit (0-9) as a String, Character, or Integer.
      * Note: This method's logic may be fragile and less reliable than Character.isDigit(char).
@@ -80,23 +81,119 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
     /**
-     * Calculates the exponent of a number (a^b) using a loop for positive integer exponents (b).
-     * Note: This implementation only supports non-negative integer exponents.
-     * @param a The base.
-     * @param b The exponent.
-     * @return The result of a raised to the power of b.
+     * Checks if a Double value represents an integer.
+     * @param number The Double to check.
+     * @return true if the number has no fractional part, false otherwise.
      */
-    private Double exponent(Double a, Double b) {
-        Double times = b;
-        Double exp = (double) 1;
-        // Iteratively multiply the base 'a' by itself 'b' times.
-        while (times>0) {
-            exp*=a;
-            times--;
-        }
-        return exp;
+    private boolean isInteger(Double number) {
+        // A number is an integer if its double value is the same as its long value.
+        long longNumber = number.longValue();
+        double doubleNumber = (double)longNumber;
+        return doubleNumber == number;
     }
+
+    /**
+     * Calculates the power of a number (base^exponent).
+     * This method handles positive and negative, integer and fractional exponents.
+     * Note: This implementation only supports non-negative bases for fractional exponents.
+     * @param base The base number.
+     * @param exponentValue The exponent.
+     * @return The result of base raised to the power of exponentValue.
+     */
+    private Double exponent(Double base, Double exponentValue) {
+        // Handle negative exponents by calculating the reciprocal of the result for the positive exponent.
+        boolean isNegative = false;
+        if (exponentValue < 0) {
+            exponentValue *= -1.0;
+            isNegative = true;
+        }
+        // Handle the case of a zero exponent, which always results in 1.
+        if (exponentValue == 0) {
+            return 1.0;
+        }
+        // If the exponent is an integer, calculate power through simple multiplication.
+        if (isInteger(exponentValue)){
+            Double result = 1.0;
+            for (int i = 0; i < exponentValue; i++) {
+                result *= base;
+            }
+            if (isNegative){return 1/result;}
+            return result;
+        }
+        // If the exponent is a fraction, convert it to a numerator/denominator pair.
+        // The calculation becomes (base^(numerator/denominator)), which is equivalent to
+        // (base^(1/denominator))^numerator, calculated here as (root(base, denominator))^numerator.
+        else {
+            String exponentString = exponentValue.toString();
+            String fractionalPartString = exponentString.substring(exponentString.indexOf(".") + 1);
+
+            // Initial numerator and denominator from the decimal part.
+            Double numerator = Double.valueOf(fractionalPartString);
+            Double denominator = 1.0;
+            for (int i = 0; i < fractionalPartString.length(); i++) {
+                denominator *= 10;
+            }
+
+            // Simplify the fraction by dividing by common factors (2 and 3).
+            // This is a basic simplification and could be improved with a GCD algorithm.
+            while (true) {
+                if (numerator % 2 == 0 && denominator % 2 == 0){
+                    numerator /= 2.0;
+                    denominator /= 2.0;
+                }
+                else if (numerator % 3 == 0 && denominator % 3 == 0){
+                    numerator /= 3.0;
+                    denominator /= 3.0;
+                }
+                else{
+                    break;
+                }
+            }
+            // Recursively call exponent with the root as the new base and the numerator as the new exponent.
+            Double result = exponent(root(base, denominator), numerator);
+
+            // If the original exponent was negative, return the reciprocal.
+            if (isNegative) { return 1.0 / result; }
+            return result;
+        }
+    }
+
+    /**
+     * Calculates the nth root of a number using Newton's method.
+     * f(x) = x^n - number. The root is where f(x) = 0.
+     * The iteration is: x_k+1 = x_k - f(x_k) / f'(x_k)
+     * f'(x_k) = n * x_k^(n-1)
+     * So, x_k+1 = x_k - (x_k^n - number) / (n * x_k^(n-1))
+     * @param number The number to find the root of. Must be non-negative.
+     * @param rootDegree The degree of the root (e.g., 2 for square root).
+     * @return The nth root of the number.
+     */
+    private Double root(Double number, Double rootDegree) {
+        // Root of a negative number is not supported for even degrees in this implementation.
+        if (number < 0){
+            return null;
+        }
+        // An initial guess for the root.
+        Double currentGuess = (number + 1) / 10;
+        Double nextGuess;
+
+        while(true) {
+            // Apply Newton's method formula to get the next, more accurate guess.
+            double fx = exponent(currentGuess, rootDegree) - number;
+            double f_prime_x = rootDegree * exponent(currentGuess, rootDegree - 1);
+            nextGuess = currentGuess - (fx / f_prime_x);
+
+            // Check for convergence (when the current and next guess are effectively equal).
+            if (currentGuess.equals(nextGuess)) {
+                break;
+            }
+            currentGuess = nextGuess;
+        }
+        return nextGuess;
+    }
+
     /**
      * Performs a specific arithmetic operation (+, -, *, /, ^) on a list of numbers and operators,
      * following the left-to-right order for the specified operator.
@@ -132,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
         items.remove(index);
         items.remove(index);
     }
+
     /**
      * Calculates the square root (√) of the operand that immediately follows it in the token list.
      * It uses the Babylonian method for approximation. The token list is modified in-place.
@@ -162,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
         // Set the result in the position of the original operand
         items.set(index,sqrtVal);
     }
+
     /**
      * Calculates the result of an expression stored in a list of tokens, respecting the order of operations (PEMDAS/BODMAS).
      * Operations are executed in the order: Exponentiation (^), Square Root (√), Multiplication/Division (*, /), Addition/Subtraction (+, -).
@@ -221,7 +320,6 @@ public class MainActivity extends AppCompatActivity {
                 index++;
             }
         }
-
         // After all operations, only the final result should remain at index 0.
         return (Double)items.get(0);
     }
@@ -426,7 +524,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button8).setOnClickListener(v -> {onclick(v);});
         findViewById(R.id.button9).setOnClickListener(v -> {onclick(v);});
 
-
         // --- Operator and Special Function Listeners with Validation ---
 
         findViewById(R.id.buttonAdd).setOnClickListener(v -> {
@@ -491,7 +588,7 @@ public class MainActivity extends AppCompatActivity {
             if ((screen.getText().toString().length()>0 &&
                     !isDigit(screen.getText().toString().toCharArray()[screen.getText().toString().length()-1]) &&
                     screen.getText().toString().toCharArray()[screen.getText().toString().length()-1]!='.') ||
-                    screen.getText().toString().length()>0) {
+                    screen.getText().toString().length()==0) {
                 String text = screen.getText().toString();
                 screen.setText(text + ((double) 22 / 7)); // Uses double division for approximation
             }
@@ -501,7 +598,7 @@ public class MainActivity extends AppCompatActivity {
             if ((screen.getText().toString().length()>0 &&
                     !isDigit(screen.getText().toString().toCharArray()[screen.getText().toString().length()-1]) &&
                     screen.getText().toString().toCharArray()[screen.getText().toString().length()-1]!='.') ||
-                    screen.getText().toString().length()>0) {
+                    screen.getText().toString().length()==0) {
                 String text = screen.getText().toString();
                 screen.setText(text+((double)19/7)); // Uses double division for approximation
             }
