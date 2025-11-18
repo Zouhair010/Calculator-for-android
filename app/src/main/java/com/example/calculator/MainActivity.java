@@ -130,27 +130,19 @@ public class MainActivity extends AppCompatActivity {
             String fractionalPartString = exponentString.substring(exponentString.indexOf(".") + 1);
 
             // Initial numerator and denominator from the decimal part.
-            Double numerator = Double.valueOf(fractionalPartString);
             Double denominator = 1.0;
             for (int i = 0; i < fractionalPartString.length(); i++) {
                 denominator *= 10;
             }
+            Double numerator = denominator * Double.valueOf(exponentValue);
 
             // Simplify the fraction by dividing by common factors (2 and 3).
             // This is a basic simplification and could be improved with a GCD algorithm.
-            while (true) {
-                if (numerator % 2 == 0 && denominator % 2 == 0){
-                    numerator /= 2.0;
-                    denominator /= 2.0;
-                }
-                else if (numerator % 3 == 0 && denominator % 3 == 0){
-                    numerator /= 3.0;
-                    denominator /= 3.0;
-                }
-                else{
-                    break;
-                }
-            }
+            Double gcDivisor = gcd(numerator,denominator);
+
+            numerator /= gcDivisor;
+            denominator /= gcDivisor;
+
             // Recursively call exponent with the root as the new base and the numerator as the new exponent.
             Double result = exponent(root(base, denominator), numerator);
 
@@ -192,6 +184,20 @@ public class MainActivity extends AppCompatActivity {
             currentGuess = nextGuess;
         }
         return nextGuess;
+    }
+
+    private static Double gcd(Double a, Double b) {
+        Double greatestNumber = (a>b) ? a : b;
+        Double counter = 1.0;
+        Double divisor = counter;
+        while (counter<greatestNumber) {
+            if (a%counter==0 && b%counter==0){
+                divisor = counter;
+            }
+            counter++;
+        }
+        System.out.println("gcd is = "+divisor);
+        return divisor;
     }
 
     /**
