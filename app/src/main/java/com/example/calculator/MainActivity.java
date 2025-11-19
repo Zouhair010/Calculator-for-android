@@ -154,32 +154,43 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Calculates the nth root of a number using Newton's method.
-     * f(x) = x^n - number. The root is where f(x) = 0.
-     * The iteration is: x_k+1 = x_k - f(x_k) / f'(x_k)
-     * f'(x_k) = n * x_k^(n-1)
-     * So, x_k+1 = x_k - (x_k^n - number) / (n * x_k^(n-1))
-     * @param number The number to find the root of. Must be non-negative.
+     * This method finds a value 'x' such that x^rootDegree = number.
+     * It uses the iterative formula from Newton's method:
+     * x_next = x_current - (x_current^rootDegree - number) / (rootDegree * x_current^(rootDegree-1))
+     * @param number The number to find the root of. Must be non-negative if rootDegree is even.
      * @param rootDegree The degree of the root (e.g., 2 for square root).
-     * @return The nth root of the number.
+     * @return The nth root of the number, or null if an even root of a negative number is attempted.
      */
-    private Double root(Double number, Double rootDegree) {
-        // Root of a negative number is not supported for even degrees in this implementation.
-        if (number < 0 && rootDegree%2==0){
+    private static Double root(Double number, Double rootDegree) {
+        // An even root of a negative number is not a real number.
+        if (number < 0 && rootDegree % 2 == 0){
             return null;
         }
-        // An initial guess for the root.
-        Double currentGuess = (number + 1) / 10;
-        Double nextGuess;
-
-        while(true) {
-            // Apply Newton's method formula to get the next, more accurate guess.
+        // Set an initial guess for Newton's method. A good initial guess is crucial
+        // for the speed and stability of convergence.
+        Double currentGuess;
+        // For numbers <= 1, the number itself is a good starting point.
+        if (number <= 1.0) {
+            currentGuess = number;
+            // For very large numbers, number/rootDegree provides a better initial estimate.
+        } else if (number>exponent(10.0,14.0)){
+            currentGuess = number / rootDegree;
+        } else{
+            // For other numbers, a value close to 1 is a reasonable default.
+            currentGuess = 0.99999999999999;
+        }
+        Double nextGuess = 1.0;
+        int iteration = 300;
+        while(iteration-- > 0) {
+            // Apply one iteration of Newton's method to get a better approximation of the root.
             double fx = exponent(currentGuess, rootDegree) - number;
             double f_prime_x = rootDegree * exponent(currentGuess, rootDegree - 1);
             nextGuess = currentGuess - (fx / f_prime_x);
 
-            // Check for convergence (when the current and next guess are effectively equal).
-            if (currentGuess.equals(nextGuess)) {
-                break;
+            // Check for convergence. If the guess is no longer changing significantly,
+            // we have found the root to a sufficient precision.
+            if (Math.abs(currentGuess - nextGuess) < 1e-12) {
+                return nextGuess;
             }
             currentGuess = nextGuess;
         }
@@ -193,8 +204,7 @@ public class MainActivity extends AppCompatActivity {
      * @param b The second number.
      * @return The greatest common divisor of a and b, as a Double.
      */
-    private static Double gcd(Double a, Double b) {
-
+    private Double gcd(Double a, Double b) {
         // The algorithm works with positive integers, so take the absolute value of the inputs.
         a = (a>0) ? a : -a;
         b = (b>0) ? b : -b;
