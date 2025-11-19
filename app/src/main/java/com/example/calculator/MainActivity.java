@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private Double root(Double number, Double rootDegree) {
         // Root of a negative number is not supported for even degrees in this implementation.
-        if (number < 0){
+        if (number < 0 && rootDegree%2==0){
             return null;
         }
         // An initial guess for the root.
@@ -186,18 +186,33 @@ public class MainActivity extends AppCompatActivity {
         return nextGuess;
     }
 
+    /**
+     * Calculates the greatest common divisor (GCD) of two numbers using the Euclidean algorithm.
+     * This implementation converts Double inputs to long integers to perform the calculation.
+     * @param a The first number.
+     * @param b The second number.
+     * @return The greatest common divisor of a and b, as a Double.
+     */
     private static Double gcd(Double a, Double b) {
-        Double greatestNumber = (a>b) ? a : b;
-        Double counter = 1.0;
-        Double divisor = counter;
-        while (counter<greatestNumber) {
-            if (a%counter==0 && b%counter==0){
-                divisor = counter;
-            }
-            counter++;
+
+        // The algorithm works with positive integers, so take the absolute value of the inputs.
+        a = (a>0) ? a : -a;
+        b = (b>0) ? b : -b;
+
+        // Convert Doubles to longs for the Euclidean algorithm.
+        // Assign the larger number to x and the smaller to y.
+        long x = (a>b) ? a.longValue() : b.longValue();
+        long y = (a<b) ? a.longValue()  : b.longValue() ;
+
+        // Apply the Euclidean algorithm: repeatedly replace the larger number
+        // with the remainder of the division of the larger number by the smaller one.
+        while (y!=0){
+            long temp = x;
+            x = y;
+            y = temp%y;
         }
-        System.out.println("gcd is = "+divisor);
-        return divisor;
+        // The GCD is the last non-zero remainder, which is stored in x.
+        return (double) x;
     }
 
     /**
